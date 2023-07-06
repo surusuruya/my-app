@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Content from "./Content";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           placeholder="테마를 입력하세요."
           onKeyDown={handleEnter}
         ></Input>
+        <Content />
       </Container>
     </div>
   );

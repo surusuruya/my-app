@@ -6,9 +6,11 @@ import Content from "./Content";
 function App() {
   const [thema, setThema] = useState("");
 
-  const handleEnter = event => {
+  // 테마 입력 Enter
+  const inputEnter = event => {
     if(event.key === "Enter") {
       setThema(event.target.value);
+      event.target.value = "";
     }
   }
   return (
@@ -16,7 +18,7 @@ function App() {
       <Container thema={thema}>
         <Input 
           placeholder="테마를 입력하세요."
-          onKeyDown={handleEnter}
+          onKeyDown={inputEnter}
         ></Input>
         <Content />
       </Container>

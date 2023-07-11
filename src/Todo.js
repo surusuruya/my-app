@@ -30,15 +30,31 @@ function Todo(){
         nextId.current++;
     }, [todos]);
 
+    const onRemove = useCallback(id => {
+        setTodos(todos.filter(
+            todo => todo.id !== id
+        ))
+    }, [todos]);
+
+    const onToggle = useCallback(id => {
+        setTodos(todos.map(todo =>
+                todo.id === id ? {...todo, checked: !todo.checked} : todo,
+            ),
+        );
+    }, [todos]);
+
 
     return (
         <Container>
             <TodoInsert onInsert={onInsert} />            
-            <TodoList todos={todos} />
-                
+            <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
         </Container>
     );
 }
+
+
+
+
 
 function TodoInsert({onInsert}){
     const [value, setValue] = useState('');
@@ -62,25 +78,26 @@ function TodoInsert({onInsert}){
     )
 }
 
-function TodoList({todos}){
+function TodoList({todos, onRemove, onToggle}){
     return (
         <div className="todoList">
             {todos.map(todo => (
-                <TodoListItem todo={todo} key={todo.id}/>
+                <TodoListItem todo={todo} key={todo.id} onRemove={onRemove} onToggle={onToggle} />
             ))}
         </div>
     )
 }
 
-function TodoListItem({todo}){
-    const {text, checked} = todo;
+function TodoListItem({todo, onRemove, onToggle}){
+    const {id, text, checked} = todo;
+
     return (
         <div className="todoListItem">
-            <div className={cn('todoCheck', {checked})}>
+            <div className={cn('todoCheck', {checked})} onClick={()=>onToggle(id)}>
                 {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
                 <div className="todoText">{text}</div>
             </div>
-            <div className="todoRemove">
+            <div className="todoRemove" onClick={()=>onRemove(id)}>
                 <MdRemoveCircleOutline />
             </div>
         </div>
@@ -156,7 +173,7 @@ const Container = styled.div`
                 flex: 1;
             }
 
-            &:checked {
+            &.checked {
                 svg {
                     color: #22b8fc;
                 }

@@ -27,7 +27,7 @@ function Clock(){
                     : date.getDay() === 2 ? "Tuesday"
                     : date.getDay() === 3 ? "Wednesday"
                     : date.getDay() === 4 ? "Thursday"
-                    : date.getDay() === 5 ? "Fridya"
+                    : date.getDay() === 5 ? "Friday"
                     : "Saturday"
                 }
             </CurDav>
